@@ -1,0 +1,12 @@
+Locales['fi'] = {
+  ['shop'] = 'shop',
+  ['shops'] = 'shops',
+  ['press_menu'] = '~w~~INPUT_CONTEXT~ ~y~to buy.',
+  ['shop_item'] = '$%s',
+  ['bought'] = 'You bought ~y~%sx~s~ ~b~%s~s~. Price total of ~r~$%s~s~',
+  ['not_enough'] = 'You do not have ~r~enough money~s~, you are ~y~missing~s~ ~r~$%s~s~!',
+  ['player_cannot_hold'] = 'Ýou  ~r~do not have~s~ enough ~y~space~s~ in your bag!',
+  ['shop_confirm'] = 'Buy %sx %s for total of $%s?',
+  ['no'] = 'no',
+  ['yes'] = 'yes',
+}
