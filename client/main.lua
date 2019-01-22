@@ -101,21 +101,19 @@ end)
 -- Enter / Exit marker events
 Citizen.CreateThread(function()
 	while true do
-		sleep = 3000
+		sleep = 2000
 		local coords      = GetEntityCoords(PlayerPedId())
 		local isInMarker  = false
 		local currentZone = nil
 
 		for k,v in pairs(Config.Zones) do
 			if v.stationary ~= nil and v.stationary then
-				if objectDistance(v.models) < 100.0 then
-					sleep = 250
-					if objectDistance(v.models) < v.size then
+				if isNearObjects(v.models) then
+					sleep = 1
 					isInMarker = true
 					ShopItems = v.Items
 					currentZone = k
 					LastZone = k
-					end
 				end
 			else
 				for i = 1, #v.Pos, 1 do
@@ -165,15 +163,50 @@ Citizen.CreateThread(function()
 end)
 
 
-function objectDistance(objectList)
+function isNearObjects(objectList)
 	local playerLoc = GetEntityCoords(GetPlayerPed(-1))
 
 	for i = 1, #objectList do
-		local closestObject = GetClosestObjectOfType(playerLoc, 10.0, GetHashKey(objectList[i]), false, false, false)
+		local closestObject = GetClosestObjectOfType(playerLoc, 1.0, GetHashKey(objectList[i]), false, false, false)
 		
 		if closestObject ~= nil then
-			distance = GetDistanceBetweenCoords(playerLoc, GetEntityCoords(closestObject))
+			if GetDistanceBetweenCoords(playerLoc, GetEntityCoords(closestObject)) <= 1.2 then
+				return true
+			end
 		end
 	end
-	return distance
+	
+	return false
 end
+
+local IsAnimated = false
+RegisterNetEvent("shops:vendingMachine")
+AddEventHandler("shops:vendingMachine", function(prop)
+	local ped = GetPlayerPed(-1)
+	if not IsAnimated then
+		local prop_name = prop
+		IsAnimated = true
+		local playerPed = GetPlayerPed(-1)
+		Citizen.CreateThread(function()
+			FreezeEntityPosition(ped, true)
+			ClearPedTasksImmediately(ped)
+			TriggerEvent('InteractSound_CL:PlayOnOne', 'SodaMachine', 1.0)
+			Citizen.Wait(2000)
+			local x,y,z = table.unpack(GetEntityCoords(playerPed))
+			RequestAnimDict('amb@medic@standing@kneel@base')  
+			while not HasAnimDictLoaded('amb@medic@standing@kneel@base') do
+				Citizen.Wait(0)
+			end
+			TaskPlayAnim(playerPed, 'amb@medic@standing@kneel@base', 'base', 3.0, 3.0, 2000, 0, 1, true, true, true)
+			Citizen.Wait(700)
+			prop = CreateObject(GetHashKey(prop_name), x, y, z+0.2,  true,  true, true)
+			AttachEntityToEntity(prop, playerPed, GetPedBoneIndex(playerPed, 18905), 0.12, 0.028, 0.001, 300.00, 180.0, 20.0, true, true, false, true, 1, true)
+			Citizen.Wait(1500)
+			IsAnimated = false
+			ClearPedSecondaryTask(playerPed)
+			FreezeEntityPosition(ped, false)
+			Citizen.Wait(2500)
+			DeleteObject(prop)
+		end)
+	end
+end)
