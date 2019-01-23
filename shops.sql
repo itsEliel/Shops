@@ -22,8 +22,14 @@ INSERT INTO `shops` (store, item, price) VALUES
 	('Weedshop','bread',30),
 	('Weedshop','water',15),
 
-	('Hotdogstand','bread',30),
-	('Hotdogstand','water',15),
+	('HotdogCart','bread',30),
+	('HotdogCart','water',15),
+
+	('FoodVan','bread',30),
+	('FoodVan','water',15),
+
+	('Fruits','bread',30),
+	('Fruits','water',15),
 
 	('Burgerstand','bread',30),
 	('Burgerstand','water',15),
