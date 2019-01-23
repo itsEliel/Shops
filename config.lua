@@ -1,4 +1,8 @@
 Config              = {}
+Config.DrawDistance = 100
+Config.Size         = {x = 1.5, y = 1.5, z = 1.5}
+Config.Color        = {r = 0, g = 128, b = 255}
+Config.Type         = 1
 Config.Locale       = 'fi'
 
 Config.Zones = {
@@ -53,13 +57,36 @@ Config.Zones = {
         }
     },
 
-    Hotdogstand = {
+    Fruits = {
+        stationary = true,
+        size = 3.0,
+        Items = {},
+        DisplayBlip = false,
+        models = {
+            'prop_fruitstand_01',
+            'prop_fruitstand_b',
+            'prop_fruitstand_nite'
+        }
+    },
+
+    HotdogCart = {
         stationary = true,
         size = 4.0,
         Items = {},
         DisplayBlip = false,
         models = {
             'prop_hotdogstand_01',
+        }
+    },
+
+    FoodVan = {
+        stationary = true,
+        size = 3.0,
+        Items = {},
+        DisplayBlip = false,
+        models = {
+            'prop_food_van_01',
+            'prop_food_van_02'
         }
     },
     
@@ -74,7 +101,7 @@ Config.Zones = {
     },
 
     Coffeemachine = {
-        size = 2.0,
+        size = 1.5,
         stationary = true,
         Items = {},
         DisplayBlip = false,
@@ -84,7 +111,7 @@ Config.Zones = {
     },
 
     Sodamachine = {
-        size = 2.0,
+        size = 1.5,
         stationary = true,
         Items = {},
         DisplayBlip = false,
@@ -96,7 +123,7 @@ Config.Zones = {
     },
 
     Snackmachine = {
-        size = 2.0,
+        size = 1.5,
         stationary = true,
         Items = {},
         DisplayBlip = false,
